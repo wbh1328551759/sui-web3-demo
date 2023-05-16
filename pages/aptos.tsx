@@ -19,6 +19,7 @@ const AptosPage = () => {
   console.log('currentWallet', currentWallet)
   if (connected) {
     return (
+      // @ts-ignore
       <div>{account?.address}</div>
     )
   }
