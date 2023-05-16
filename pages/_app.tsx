@@ -20,6 +20,13 @@ import {
   FoxWalletAdapter,
   OpenBlockWalletAdapter
 } from '@manahippo/aptos-wallet-adapter';
+import { StarknetConfig } from '@starknet-react/core'
+import { InjectedConnector as StarknetInjectedConnector } from '@starknet-react/core'
+
+const starknetConnectors = [
+  new StarknetInjectedConnector({ options: { id: 'braavos' } }),
+  new StarknetInjectedConnector({ options: { id: 'argentX' } }),
+]
 
 export default function App({ Component, pageProps }: AppProps) {
   const wallets = [
@@ -41,24 +48,25 @@ export default function App({ Component, pageProps }: AppProps) {
     new OpenBlockWalletAdapter()
   ]
   return (
-    // <WagmiConfig client={client}>
 
-    <AptosWalletProvider autoConnect wallets={wallets}>
-      <ThirdwebProvider activeChain="arbitrum">
+    <StarknetConfig autoConnect connectors={starknetConnectors}>
 
-        <WalletProvider chains={[
-          {
-            id: 'sui:testnet',
-            name: 'Sui Testnet',
-            rpcUrl: 'https://sui-testnet-wave3.coming.chat',
-          }
-        ]}>
-          <Component {...pageProps} />
-        </WalletProvider>
-      </ThirdwebProvider>
-    </AptosWalletProvider>
+      <AptosWalletProvider autoConnect wallets={wallets}>
+        <ThirdwebProvider activeChain="arbitrum">
 
-    // </WagmiConfig>
+          <WalletProvider chains={[
+            {
+              id: 'sui:testnet',
+              name: 'Sui Testnet',
+              rpcUrl: 'https://sui-testnet-wave3.coming.chat',
+            }
+          ]}>
+            <Component {...pageProps} />
+          </WalletProvider>
+        </ThirdwebProvider>
+      </AptosWalletProvider>
 
+
+    </StarknetConfig>
 )
 }
