@@ -19,7 +19,8 @@ const Starknet = () => {
     address: '0x049d36570d4e46f48e99674bd3fcc84644ddd6b96f7c741b1562b82f9e004dc7',
     abi: ERC20ABI,
     functionName: 'balanceOf',
-    args: [address]
+    args: [address],
+    watch: true,
   })
   // console.log('account',chain, connector)
 
@@ -162,7 +163,7 @@ const Starknet = () => {
       {address ? (
         <div>
           当前账户：{address}
-          <div>Balance: {isLoadingBalance && 'loading...'} {utils.formatUnits(balance?.[0]?.low.toString(), 18)}</div>
+          <div>Balance: {isLoadingBalance && 'loading...'} {utils.formatUnits(balance?.[0]?.low.toString() || '0', 18)}</div>
           <button onClick={disconnect}>disconnect</button>
         </div>
       ) : (
